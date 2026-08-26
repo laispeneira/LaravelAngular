@@ -11,18 +11,25 @@ import { Router } from '@angular/router';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  alunos: any = [
+    {nome: 'trompete gordo', email:'gordao@gmail.com'},
+    {nome: 'lais gorda', email: 'gordinhamastabom@hotmail.com'}
+  ];
+  titulo:string = 'listagem de alunos';
+  subtitulo:string = 'sistema integrado de Gestão'
 
-  pokemon:any = {
-    nome: null,
-    poder: null
-  };
-
-  constructor( 
-    public crudService: CrudService
-  ){ }
-
-  enviar() {
-    this.crudService.insert(this.pokemon, 'pokemons');
+  constructor(){
+    fetch('https//127.0.0.1:8000/aluno/index')
+    .then(resp => resp.json())
+    .then(resp => {
+      this.alunos = resp;
+    })
+    .catch(erro => {
+      console.log(erro);
+    })
+    .finally(()=> {
+      console.log('requisição finalizada!');
+    })
   }
 
 }
